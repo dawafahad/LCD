@@ -1,0 +1,103 @@
+Upgrade the existing LCD Compatibility Finder app.
+
+Add a new feature called:
+
+"Generate Daily Price List"
+
+Core Requirement:
+
+If an LCD is marked as OUT OF STOCK,
+then ALL its compatible models must be automatically removed from the generated price list.
+
+We generate a fresh WhatsApp-ready text list daily.
+
+-------------------------------------
+
+STEP 1: Add Stock Toggle
+
+Each LCD entry should now have:
+- In Stock (true/false toggle button)
+
+If false:
+- That LCD and all its compatible models must not appear in price list.
+
+-------------------------------------
+
+STEP 2: Add Selling Price Field
+
+Each LCD must now include:
+- Selling Price
+
+So LCD data becomes:
+
+- LCD Name
+- Compatible Models (array)
+- Supplier
+- Purchase Rate
+- Selling Price
+- In Stock (true/false)
+
+-------------------------------------
+
+STEP 3: Add "Generate Price List" Button
+
+When clicked:
+
+1. Automatically group models by BRAND name
+   (Detect brand from model name prefix like OPPO, SAMSUNG, MI, etc.)
+
+2. Format output EXACTLY like this:
+
+🔥New Fresh Stock Arrived 🔥
+
+💎*```SAFIRE```*🔥 _HD++_
+🔆500+
+ ```super duper universal``` 
+
+*BRAND NAME*
+Model - ₹Price
+Model - ₹Price
+
+3. If multiple LCDs use different selling prices,
+use each LCD's selling price for its compatible models.
+
+4. Do NOT show models from out-of-stock LCDs.
+
+5. Remove duplicate models.
+
+-------------------------------------
+
+STEP 4: Smart Logic
+
+- Case insensitive grouping
+- Trim spaces
+- Auto detect brand from first word in model
+- If model contains slash ( / ), treat as separate models
+- If model contains variant like 5G, keep it
+
+-------------------------------------
+
+STEP 5: Output
+
+After generation:
+- Show formatted text inside a large copyable text box
+- Add "Copy to Clipboard" button
+- Add "Download as .txt" button
+
+-------------------------------------
+
+UI Requirements:
+
+- Clean minimal layout
+- Make supplier name smaller text
+- Make selling price look like price tag (bold + slightly larger)
+- Card layout
+- Mobile friendly
+
+Goal:
+One-click daily WhatsApp price list generator.
+Fast.
+Simple.
+No unnecessary complexity.
+
+Generate updated full working code.

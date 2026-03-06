@@ -1,0 +1,142 @@
+Upgrade the LCD Compatibility Finder app to fix two major problems.
+
+-------------------------------------
+PROBLEM 1: BRAND GROUPING WRONG
+-------------------------------------
+
+Currently the app is trying to detect brand automatically from model names.
+This causes incorrect grouping in the WhatsApp price list.
+
+Solution:
+
+When adding a new LCD entry, add a required field:
+
+Brand
+
+Updated LCD Data Structure:
+
+- Brand (dropdown or text)
+- LCD Name
+- Compatible Models (comma separated)
+- Supplier Name
+- Purchase Rate
+- Selling Price
+- In Stock (true/false)
+
+Example:
+
+Brand: OPPO
+LCD Name: SAFIRE HD++
+Compatible Models: A12, A15, A17, A18
+Supplier: Rahman Traders
+Purchase Rate: 420
+Selling Price: 470
+In Stock: true
+
+Important Logic:
+
+When generating the price list:
+
+1. Group models using the Brand field
+2. Show one brand heading
+3. Then list all models under that brand
+
+Correct Output Example:
+
+*OPPO*
+A12 - ₹470
+A15 - ₹470
+A17 - ₹470
+A18 - ₹470
+
+NOT one heading per model.
+
+-------------------------------------
+PROBLEM 2: DATA DISAPPEARS
+-------------------------------------
+
+Currently data is stored in browser localStorage.
+This causes data loss whenever the app rebuilds or updates.
+
+Replace localStorage with a cloud database.
+
+Use Supabase as backend database.
+
+Create table:
+
+lcd_inventory
+
+Columns:
+
+id
+brand
+lcd_name
+compatible_models (text array)
+supplier
+purchase_rate
+selling_price
+in_stock
+created_at
+
+Requirements:
+
+- All LCD entries must be saved in Supabase
+- Data must load from Supabase on app start
+- New entries insert into Supabase
+- Edits update Supabase
+- Stock toggle updates Supabase
+
+This ensures data is permanently saved in the cloud
+even if the app updates or reloads.
+
+-------------------------------------
+UI IMPROVEMENTS
+
+Improve card UI:
+
+- Make price look like price tag badge
+- Supplier name smaller and gray
+- Brand label visible
+- Cleaner spacing
+- Mobile optimized
+
+-------------------------------------
+PRICE LIST GENERATOR
+
+Add button:
+
+Generate WhatsApp Price List
+
+Rules:
+
+- Ignore out-of-stock LCDs
+- Group by brand field
+- Expand compatible models into individual lines
+- Apply LCD selling price to all compatible models
+
+Format exactly like:
+
+🔥New Fresh Stock Arrived 🔥
+
+💎*```SAFIRE```*🔥 _HD++_
+🔆500+
+ ```super duper universal```
+
+*OPPO*
+A12 - ₹470
+A15 - ₹470
+A17 - ₹470
+
+*SAMSUNG*
+A10 - ₹460
+A11 - ₹490
+
+Output must appear in copyable text box.
+
+Add button:
+Copy to Clipboard.
+
+-------------------------------------
+
+Keep code clean, commented, and simple.
+Ensure fast mobile performance.
